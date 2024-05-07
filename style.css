@@ -1,0 +1,23 @@
+.mydelbut {
+    float: right;
+    border: none;
+    color: red;
+    background-color: white;
+    margin-top: 4px;
+}
+
+.myaddbut {
+    float: right;
+    border: none;
+    color: green;
+    background-color: white;
+    margin-top: 18px;
+}
+
+.productspos {
+    margin-top: 10px;
+}
+
+.descriptionpos {
+    margin-left: 10px;
+}
