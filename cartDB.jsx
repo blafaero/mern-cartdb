@@ -8,15 +8,6 @@ const products = [
     { name: "Cabbage", country: "USA",   cost: 1, instock: 8,  pid: PIDs[3] },
 ];
 
-//=========Cart=============
-const Cart = (props) => {
-    const { Card, Accordion, Button } = ReactBootstrap;
-    let data = props.location.data ? props.location.data : products;
-    console.log(`data:${JSON.stringify(data)}`);
-
-    return <Accordion defaultActiveKey="0">{list}</Accordion>;
-};
-
 const useDataApi = (initialUrl, initialData) => {
     const { useState, useEffect, useReducer } = React;
     const [url, setUrl] = useState(initialUrl);
@@ -83,7 +74,6 @@ const dataFetchReducer = (state, action) => {
 const Products = (props) => {
     const [items, setItems] = React.useState(products);
     const [cart, setCart] = React.useState([]);
-    const [total, setTotal] = React.useState(0);
     const {
         Card,
         Accordion,
@@ -96,8 +86,8 @@ const Products = (props) => {
     } = ReactBootstrap;
 
     //  Fetch Data
-    const { Fragment, useState, useEffect, useReducer } = React;
-    const [query, setQuery] = useState("http://localhost:1337/api/products");
+    //const { Fragment, useState, useEffect, useReducer } = React;
+    const [query, setQuery] = React.useState("http://localhost:1337/api/products");
     const [{ data, isLoading, isError }, doFetch] = useDataApi(
         query,
         {
@@ -129,18 +119,28 @@ const Products = (props) => {
         setItems(newItems);
     };
 
-    const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
+    //const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
+    const photos = {"Apples": "apple.png", "Oranges":"orange.png", "Beans":"beans.png", "Cabbage":"cabbage.png"};
 
     let list = items.map((item, index) => {
-        let n = index + 1049;
+        //let n = index + 1049;
         // let uhit = "http://picsum.photos/" + n;
         // note, source.unsplash is used here because it loads images faster than picsum.photos
         // it should functionally be the same as picsum.photos which is shown in the videos
-        let uhit = "https://source.unsplash.com/random/800x800/?img=" + n;
+        //let uhit = "https://source.unsplash.com/random/800x800/?img=" + n;
       
+        //return (
+        //    <li key={index} className="productspos">
+        //        <Image src={uhit} width={70} roundedCircle alt={`img-${n}`}></Image>
+        //        <i className="descriptionpos">
+        //         {item.name} (x{item.instock}): ${item.cost}
+        //         </i>
+        //         <button className="bi bi-plus-square-fill myaddbut" name={item.name} id={item.pid} onClick={addToCart}></button>
+        //    </li>
+        //);
         return (
             <li key={index} className="productspos">
-                <Image src={uhit} width={70} roundedCircle alt={`img-${n}`}></Image>
+                <Image src={photos[item.name]} width={70} roundedCircle alt={`Image of ${item.name}`}></Image>
                 <i className="descriptionpos">
                  {item.name} (x{item.instock}): ${item.cost}
 
@@ -150,10 +150,21 @@ const Products = (props) => {
         );
     });
 
-                    //<Accordion.Toggle as={Button} variant="link" eventKey={1 + index}>
-                    //    {item.name} (x{(cart.filter((i) => i.name == item.name)).length}) 
-                    //</Accordion.Toggle>
     let cartList = cart.map((item, index) => {
+        // The below is for it deployed as an app....
+        //return (
+        //    <Accordion.Item key={index} variant="link" eventKey={1 + index}>
+        //        <Accordion.Header >
+        //            {item.name}
+        //        </Accordion.Header>
+        //        <Accordion.Body eventKey={1 + index}>
+        //                $ {item.cost} from {item.country}
+        //                <button className="mydelbut" onClick={() => deleteCartItem(index)}>
+        //                    <i className="bi bi-x-square-fill"></i>
+        //                </button>
+        //        </Accordion.Body>
+        //    </Accordion.Item>
+        //);
         return (
             <Card key={index}>
                 <Card.Header>
@@ -176,8 +187,6 @@ const Products = (props) => {
     });
 
     let finalList = () => {
-        //let total = [];
-        //let total = checkOut();
         let count = {};
         let cost = {};
         let desc = {};
@@ -204,28 +213,12 @@ const Products = (props) => {
         const reducer = (accum, current) => accum + current;
         let total = Object.values(sub).reduce(reducer,0); 
 
-        //total = 
-
-        //let final = cart.map((item, index) => {
-        //    return (
-        //        <div key={index} index={index}>
-        //            {item.name}
-        //        </div>
-        //    );
-        //});
         return { final, total };
     };
 
     const checkOut = () => {
         // Reset cart contents
         setCart([]);
-
-        //let costs = cart.map((item) => item.cost);
-        //const reducer = (accum, current) => accum + current;
-        //let newTotal = costs.reduce(reducer, 0);
-        //console.log(`total updated to ${newTotal}`);
-        //cart.map((item, index) => deleteCartItem(index));
-        //return newTotal;
     };
 
     const restockProducts = (url) => {
