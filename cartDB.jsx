@@ -120,7 +120,7 @@ const Products = (props) => {
     };
 
     //const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
-    const photos = {"Apples": "apple.png", "Oranges":"orange.png", "Beans":"beans.png", "Cabbage":"cabbage.png"};
+    const photos = {"Apples": "apple.png", "Oranges":"orange.png", "Beans":"beans.png", "Cabbage":"cabbage.png", "Nuts":"nuts.jpg"};
 
     let list = items.map((item, index) => {
         //let n = index + 1049;
